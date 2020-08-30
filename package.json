@@ -1,0 +1,14 @@
+{
+  "name": "new-site-warning-browser-extension",
+  "version": "1.0.0",
+  "description": "Development resources: * Extension examples: https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tyler Murphy",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chrome": "0.0.122"
+  }
+}

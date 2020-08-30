@@ -1,0 +1,39 @@
+{
+	"name": "New Site Warning",
+	"version": "1.0.0",
+	"description": "Warns you when you've never visited a site before, which can help prevent phishing attacks.",
+	"manifest_version": 2,
+	"background": {
+		"scripts": [
+			"background.js"
+		],
+		"persistent": false
+	},
+	"permissions": [
+		"<all_urls>",
+		"history"
+	],
+	"content_scripts": [
+		{
+			"run_at": "document_start",
+			"all_frames": true,
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"content.js"
+			],
+			"css": []
+		}
+	],
+	"page_action": {
+		"default_popup": "popup.html",
+		"default_icon": {
+			"16": "icons/16x16.png",
+			"32": "icons/32x32.png",
+			"64": "icons/64x64.png",
+			"128": "icons/128x128.png",
+			"256": "icons/256x256.png"
+		}
+	}
+}
