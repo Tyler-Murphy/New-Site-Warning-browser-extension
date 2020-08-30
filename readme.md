@@ -2,6 +2,8 @@
 
 `content.js` runs on all pages. It sends queries to the back-end, `background.js`, which has access to the browser's history API, and can tell `content.js` whether a page has been visited before. If the page hasn't been visited before, `content.js` displays a warning on the page.
 
+The extension hasn't yet been published anywhere. To install it, clone the repository, and then follow your browser's instructions for enabling extension developer mode and installing a development extension.
+
 ### Development
 
 Development resources:
