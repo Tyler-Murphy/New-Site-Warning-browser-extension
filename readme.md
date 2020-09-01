@@ -16,4 +16,6 @@ To do:
 
 ### Credits
 
+@cdeevfrr had the idea for this extension.
+
 Icons are from https://freeiconshop.com/icon/error-icon-flat/
