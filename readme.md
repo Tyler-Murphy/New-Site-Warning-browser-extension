@@ -1,3 +1,7 @@
+### What it does
+
+This browser extension displays a warning for any page or embedded page  with a domain that you haven't visited before, or that you've first visited very recently. It can help to prevent phishing attacks by warning you about pages that may look legitimate, but are spoofed, and don't match the legitimate domains in your browser history.
+
 ### How it works
 
 `content.js` runs on all pages. It sends queries to the back-end, `background.js`, which has access to the browser's history API, and can tell `content.js` whether a page has been visited before. If the page hasn't been visited before, `content.js` displays a warning on the page.
