@@ -11,7 +11,7 @@ const oneMinuteMilliseconds = 60e3;
         return debugLog(`This site's most recent visit is not in the very recent past, so there's no need for a warning`)
     }
 
-    displayWarning("Warning: You have not visited this site before or first visited it very recently, according to your browser history. Be aware of phishing attempts.")
+    displayWarning(`Warning: You have not visited this ${isEmbeddedPage() ? 'embedded page' : 'site'} before or first visited it very recently, according to your browser history. Be aware of phishing attempts.`)
 })()
 
 async function getResponse(message) {
@@ -101,6 +101,19 @@ function button(text, onClick = () => { }) {
     element.addEventListener('mouseleave', () => element.setAttribute('style', style))
 
     return element
+}
+
+/**
+ * From https://stackoverflow.com/a/326076/3246022
+ *
+ * @return {boolean}
+ */
+function isEmbeddedPage() {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
 }
 
 function debugLog(...messages) {
