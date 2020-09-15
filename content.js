@@ -11,7 +11,7 @@ const oneMinuteMilliseconds = 60e3;
         return debugLog(`This site's most recent visit is not in the very recent past, so there's no need for a warning`)
     }
 
-    displayWarning(`Warning: You have not visited this ${isEmbeddedPage() ? 'embedded page' : 'site'} before or first visited it very recently, according to your browser history. Be aware of phishing attempts.`)
+    displayWarning(`Warning: You have not visited this ${isEmbeddedPage() ? `embedded page (${pageDomain})` : `site`} before or first visited it very recently, according to your browser history. Be aware of phishing attempts.`)
 })()
 
 async function getResponse(message) {
