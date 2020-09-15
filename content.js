@@ -135,8 +135,12 @@ function isEmbeddedPage() {
  */
 async function trustSite() {
     return new Promise((resolve, reject) => {
-        chrome.storage.sync.set({ [pageDomain]: 1 }, () => {
-            // errors will cause this to "fail immediately" and put the error in `runtime.lastError`, but it's not clear how to tell whether the `lastError` was a result of this failing, or how to tell that this failed "immediately", so there's no error handling for now. I'd like to add some in the future if there's a good way.
+        chrome.storage.sync.set({ [pageDomain]: 1 }, async () => {
+            // errors will cause this to "fail immediately" and put the error in `runtime.lastError`, but it's not clear how to tell whether the `lastError` was a result of this failing, or how to tell that this failed "immediately", so there's no error handling for now. I'd like to add some in the future if there's a good way. So this is how error handling works, even though it seems kind of roundabout.
+            if (!(await isTrustedSite())) {
+                return reject(new Error(`Failed to trust this site: ${chrome.runtime.lastError ? chrome.runtime.lastError.message : `unknown error`}`))
+            }
+
 
             resolve()
         })
