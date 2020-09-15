@@ -11,7 +11,8 @@
 	},
 	"permissions": [
 		"<all_urls>",
-		"history"
+		"history",
+		"storage"
 	],
 	"content_scripts": [
 		{
