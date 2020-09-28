@@ -1,9 +1,13 @@
 const oneMinuteMilliseconds = 60e3;
 const pageDomain = location.hostname;
+const page = document.documentElement
+const warnOnVisit = true
+const warnOnInput = true
 
+    ;
 (async function main() {
     if (await isTrustedSite()) {
-        return  // maybe set the icon to a neutral or safe-looking color, rather than red?
+        return debugLog(`This site is trusted, so no warning.`) // maybe set the icon to a neutral or safe-looking color, rather than red?
     }
 
     const firstVisitTime = await getResponse({ firstVisitTimeFor: pageDomain })
@@ -16,7 +20,19 @@ const pageDomain = location.hostname;
         return debugLog(`This site's most recent visit is not in the very recent past, so there's no need for a warning`)
     }
 
-    displayWarning(`Warning: You have not visited this ${isEmbeddedPage() ? `embedded page (${pageDomain})` : `site`} before or first visited it very recently, according to your browser history. Be aware of phishing attempts.`)
+    const warningText = `You have not visited this ${isEmbeddedPage() ? `embedded page (${pageDomain})` : `site`} before or first visited it very recently, according to your browser history. Be aware of phishing attempts.`
+
+    if (warnOnVisit) {
+        displayWarning(warningText)
+    }
+
+    if (warnOnInput) {
+        page.addEventListener(
+            'input',
+            () => displayWarning(`It looks like you're entering text. ` + warningText),
+            { once: true },
+        )
+    }
 })()
 
 async function getResponse(message) {
@@ -39,7 +55,6 @@ async function getResponse(message) {
  * @param {string} message
  */
 function displayWarning(message) {
-    const page = document.documentElement
     const warningDiv = document.createElement('div')
     const warningText = document.createElement('p')
     const footerText = document.createElement('p')
@@ -167,5 +182,5 @@ async function isTrustedSite() {
 }
 
 function debugLog(...messages) {
-    console.debug(`[New Site Warning browser extension] -`, ...messages)
+    console.debug(`[New Site Warning browser extension running on ${location.hostname}] -`, ...messages)
 }
