@@ -6,6 +6,8 @@ const warnOnInput = true
 
     ;
 (async function main() {
+    const pendingOptions = loadOptions()
+
     if (await isTrustedSite()) {
         return debugLog(`This site is trusted, so no warning.`) // maybe set the icon to a neutral or safe-looking color, rather than red?
     }
@@ -22,6 +24,11 @@ const warnOnInput = true
 
     const warningText = `You have not visited this ${isEmbeddedPage() ? `embedded page (${pageDomain})` : `site`} before or first visited it very recently, according to your browser history. Be aware of phishing attempts.`
 
+    const {
+        warnOnVisit,
+        warnOnInput,
+    } = await pendingOptions
+
     if (warnOnVisit) {
         displayWarning(warningText)
     }
@@ -34,6 +41,22 @@ const warnOnInput = true
         )
     }
 })()
+
+async function loadOptions() {
+    return new Promise((resolve, reject) => chrome.storage.sync.get(results => {
+        if (!results) {
+            return reject(chrome.runtime.lastError)
+        }
+
+        resolve(
+            Object.keys(results).filter(key => key.startsWith('option#')).reduce((options, key) => {
+                options[key.replace(/^option#/, '')] = results[key]
+
+                return options
+            }, {})
+        )
+    }))
+}
 
 async function getResponse(message) {
     debugLog(`sending request: ${JSON.stringify(message)}`)

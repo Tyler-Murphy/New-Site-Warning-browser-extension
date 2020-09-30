@@ -4,6 +4,20 @@
  * - Message Passing: https://developer.chrome.com/extensions/messaging
  */
 
+const options = [
+	'warnOnInput',
+	'warnOnVisit',
+]
+
+// Initialize option values
+chrome.runtime.onInstalled.addListener(() => {
+	chrome.storage.sync.set(options.reduce((object, optionName) => {
+		object[`option#${optionName}`] = 1
+
+		return object
+	}, {}))
+})
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if ('firstVisitTimeFor' in request) {
 		const domain = request.firstVisitTimeFor
