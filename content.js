@@ -1,8 +1,6 @@
 const oneMinuteMilliseconds = 60e3;
 const pageDomain = location.hostname;
 const page = document.documentElement
-const warnOnVisit = true
-const warnOnInput = true
 
     ;
 (async function main() {
